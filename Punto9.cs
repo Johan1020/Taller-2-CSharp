@@ -1,105 +1,75 @@
-using System;
-
-class Punto9
-{
-    static void Main()
+  internal class Program
     {
-        int totalCorrientes = 0;
-        int totalRecomendados = 0;
-        double totalRecaudadoLocal = 0;
-        double totalRecaudadoNacional = 0;
-        double totalRecaudadoInternacional = 0;
-
-        while (true)
+        static void Main()
         {
-            Console.WriteLine("¿Desea calcular el valor de envío de una carta? (si/no)");
-            string continuar = Console.ReadLine().ToLower();
+            int acumuladorNiño = 0;
+            int acumuladorJoven = 0;
+            int acumuladorAdulto = 0;
+            int acumuladorViejo = 0;
 
-            if (continuar != "si")
+            Console.WriteLine("Ingrese el numero de personas a mostrar: ");
+            int personas = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < personas; i++)
             {
-                break;
-            }
-
-            Console.WriteLine("Ingrese el peso de la carta en gramos:");
-            int peso = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Ingrese el tipo de envío (corriente/recomendado):");
-            string tipoEnvio = Console.ReadLine().ToLower();
-
-            Console.WriteLine("Ingrese el destino (local/nacional/internacional):");
-            string destino = Console.ReadLine().ToLower();
-
-            double valorEnvio = 0;
-
-            if (tipoEnvio == "corriente")
-            {
-                switch (destino)
+                Console.WriteLine("Ingrese la edad de la persona:");
+                int edad;
+                while (!int.TryParse(Console.ReadLine(), out edad) || edad <= 0)
                 {
-                    case "local":
-                        valorEnvio = 100;
-                        break;
-                    case "nacional":
-                        valorEnvio = 150;
-                        break;
-                    case "internacional":
-                        valorEnvio = 200;
-                        break;
-                    default:
-                        Console.WriteLine("Destino no válido.");
-                        continue;
+                    Console.WriteLine("Edad no válida. Ingrese una edad válida:");
                 }
-                totalCorrientes++;
-            }
-            else if (tipoEnvio == "recomendado")
-            {
-                switch (destino)
+
+                if (edad <= 12)
                 {
-                    case "local":
-                        valorEnvio = 200;
-                        break;
-                    case "nacional":
-                        valorEnvio = 300;
-                        break;
-                    case "internacional":
-                        valorEnvio = 400;
-                        break;
-                    default:
-                        Console.WriteLine("Destino no válido.");
-                        continue;
+                    Console.WriteLine("Ingrese el peso del niño:");
+                    int pesoNiño;
+                    while (!int.TryParse(Console.ReadLine(), out pesoNiño))
+                    {
+                        Console.WriteLine("Peso no válido. Ingrese un peso válido:");
+                    }
+                    acumuladorNiño += pesoNiño;
                 }
-                totalRecomendados++;
-            }
-            else
-            {
-                Console.WriteLine("Tipo de envío no válido.");
-                continue;
+                else if (edad <= 29)
+                {
+                    Console.WriteLine("Ingrese el peso del joven:");
+                    int pesoJoven;
+                    while (!int.TryParse(Console.ReadLine(), out pesoJoven))
+                    {
+                        Console.WriteLine("Peso no válido. Ingrese un peso válido:");
+                    }
+                    acumuladorJoven += pesoJoven;
+                }
+                else if (edad <= 59)
+                {
+                    Console.WriteLine("Ingrese el peso del adulto:");
+                    int pesoAdulto;
+                    while (!int.TryParse(Console.ReadLine(), out pesoAdulto))
+                    {
+                        Console.WriteLine("Peso no válido. Ingrese un peso válido:");
+                    }
+                    acumuladorAdulto += pesoAdulto;
+                }
+                else if (edad > 60)
+                {
+                    Console.WriteLine("Ingrese el peso del viejo:");
+                    int pesoViejo;
+                    while (!int.TryParse(Console.ReadLine(), out pesoViejo))
+                    {
+                        Console.WriteLine("Peso no válido. Ingrese un peso válido:");
+                    }
+                    acumuladorViejo += pesoViejo;
+                }
+                else
+                {
+                    Console.WriteLine("Error: Edad no válida");
+                    i--;
+                }
             }
 
-            double iva = valorEnvio * 0.16;
-            double valorTotal = valorEnvio + iva;
-
-            Console.WriteLine($"Valor a pagar por el envío: {valorTotal:C}");
-            Console.WriteLine($"IVA (16%): {iva:C}");
-
-            switch (destino)
-            {
-                case "local":
-                    totalRecaudadoLocal += valorTotal;
-                    break;
-                case "nacional":
-                    totalRecaudadoNacional += valorTotal;
-                    break;
-                case "internacional":
-                    totalRecaudadoInternacional += valorTotal;
-                    break;
-            }
+            Console.WriteLine("Resultados:");
+            Console.WriteLine($"Promedio de peso de niños: {acumuladorNiño / personas}");
+            Console.WriteLine($"Promedio de peso de jóvenes: {acumuladorJoven / personas}");
+            Console.WriteLine($"Promedio de peso de adultos: {acumuladorAdulto / personas}");
+            Console.WriteLine($"Promedio de peso de viejos: {acumuladorViejo / personas}");
         }
-
-        Console.WriteLine("Resumen:");
-        Console.WriteLine($"Total de cartas corrientes: {totalCorrientes}");
-        Console.WriteLine($"Total de cartas recomendadas: {totalRecomendados}");
-        Console.WriteLine($"Recaudación total en envíos locales: {totalRecaudadoLocal:C}");
-        Console.WriteLine($"Recaudación total en envíos nacionales: {totalRecaudadoNacional:C}");
-        Console.WriteLine($"Recaudación total en envíos internacionales: {totalRecaudadoInternacional:C}");
     }
-}
